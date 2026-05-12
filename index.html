@@ -1,51 +1,1059 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Neha Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sneha Reddy — Robotics & Autonomous Systems Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-body{font-family:Arial;margin:40px}
-h1{color:#2c3e50}
-.section{margin-top:40px}
+/* ═══════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:        #05080f;
+  --bg2:       #080d18;
+  --panel:     #0b1220;
+  --card:      #0d1628;
+  --border:    #162035;
+  --border2:   #1e304a;
+  --accent:    #00e8b8;
+  --accent2:   #ff5e1a;
+  --accent3:   #5b8fff;
+  --gold:      #f0c040;
+  --text:      #c0d4e8;
+  --dim:       #3a5570;
+  --bright:    #eaf4ff;
+  --grad1: linear-gradient(135deg,#00e8b8,#5b8fff);
+  --grad2: linear-gradient(135deg,#ff5e1a,#f0c040);
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  font-family:'DM Sans',sans-serif;
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════ */
+#cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s,width .2s,height .2s;mix-blend-mode:screen;}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,232,184,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .12s ease,width .25s,height .25s;}
+body:hover #cursor{opacity:1;}
+
+/* ═══════════════════════════════════════════
+   ANIMATED GRID BACKGROUND
+═══════════════════════════════════════════ */
+#bg-canvas{position:fixed;inset:0;z-index:0;opacity:.35;pointer-events:none;}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 48px;
+  background:rgba(5,8,15,.8);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.5rem;letter-spacing:.2em;color:var(--accent);
+  text-shadow:0 0 20px rgba(0,232,184,.4);
+}
+.nav-links{display:flex;gap:32px;}
+.nav-links a{
+  font-family:'DM Mono',monospace;font-size:.68rem;
+  letter-spacing:.18em;color:var(--dim);text-decoration:none;
+  text-transform:uppercase;transition:color .2s;
+}
+.nav-links a:hover{color:var(--accent);}
+.nav-cta{
+  font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;
+  padding:8px 20px;border:1px solid var(--accent);color:var(--accent);
+  text-decoration:none;text-transform:uppercase;
+  transition:all .2s;
+}
+.nav-cta:hover{background:var(--accent);color:#000;}
+
+/* ═══════════════════════════════════════════
+   SECTIONS COMMON
+═══════════════════════════════════════════ */
+section{position:relative;z-index:1;}
+.container{max-width:1200px;margin:0 auto;padding:0 48px;}
+
+.section-tag{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.25em;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-tag::before{content:'';display:block;width:24px;height:1px;background:var(--accent);}
+
+.section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.8rem,6vw,5rem);
+  letter-spacing:.06em;line-height:.95;color:var(--bright);
+}
+.section-title span{
+  background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:120px 0 80px;overflow:hidden;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+}
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;
+  color:var(--accent2);text-transform:uppercase;margin-bottom:20px;
+  opacity:0;animation:fadeUp .6s .2s ease forwards;
+}
+.hero-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(4rem,8vw,7.5rem);
+  letter-spacing:.04em;line-height:.9;color:var(--bright);
+  opacity:0;animation:fadeUp .7s .35s ease forwards;
+}
+.hero-name .accent{
+  display:block;background:var(--grad1);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-title{
+  font-family:'DM Mono',monospace;font-size:.8rem;letter-spacing:.18em;
+  color:var(--dim);margin-top:16px;text-transform:uppercase;
+  opacity:0;animation:fadeUp .7s .5s ease forwards;
+}
+.hero-bio{
+  font-size:1rem;line-height:1.8;color:var(--text);
+  margin-top:28px;max-width:520px;
+  opacity:0;animation:fadeUp .7s .65s ease forwards;
+}
+.hero-bio strong{color:var(--accent);}
+.hero-btns{
+  display:flex;gap:14px;margin-top:40px;
+  opacity:0;animation:fadeUp .7s .8s ease forwards;
+}
+.btn-primary{
+  font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.15em;
+  padding:14px 32px;background:var(--accent);color:#000;
+  text-decoration:none;text-transform:uppercase;font-weight:500;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,232,184,.35);}
+.btn-secondary{
+  font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.15em;
+  padding:14px 32px;border:1px solid var(--border2);color:var(--text);
+  text-decoration:none;text-transform:uppercase;
+  transition:all .2s;
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
+
+/* Hero right — drone radar viz */
+.hero-visual{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  opacity:0;animation:fadeIn .9s .9s ease forwards;
+}
+#radarCanvas{border-radius:50%;}
+
+/* Stats row */
+.hero-stats{
+  display:flex;gap:40px;margin-top:48px;padding-top:40px;
+  border-top:1px solid var(--border);
+  opacity:0;animation:fadeUp .7s 1s ease forwards;
+}
+.stat{display:flex;flex-direction:column;gap:4px;}
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;font-size:2.4rem;
+  letter-spacing:.05em;color:var(--accent);line-height:1;
+}
+.stat-lbl{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;}
+
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+#about{padding:120px 0;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:60px;}
+.about-text p{font-size:.95rem;line-height:1.85;color:var(--text);margin-bottom:18px;}
+.about-text p strong{color:var(--accent);}
+.about-info{display:flex;flex-direction:column;gap:16px;margin-top:32px;}
+.info-row{
+  display:flex;align-items:center;gap:14px;
+  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.1em;color:var(--dim);
+}
+.info-row .lbl{color:var(--accent2);min-width:80px;}
+.info-row a{color:var(--text);text-decoration:none;transition:color .2s;}
+.info-row a:hover{color:var(--accent);}
+
+/* Skills grid */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.skill-cat{
+  background:var(--card);border:1px solid var(--border);
+  padding:22px 20px;
+  transition:border-color .2s,transform .2s;
+}
+.skill-cat:hover{border-color:var(--accent);transform:translateY(-3px);}
+.skill-cat-name{
+  font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;
+  color:var(--accent);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.skill-cat-name .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;
+  padding:3px 10px;border:1px solid var(--border2);color:var(--text);
+  transition:all .2s;
+}
+.tag:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ═══════════════════════════════════════════
+   EXPERIENCE
+═══════════════════════════════════════════ */
+#experience{padding:100px 0;background:linear-gradient(180deg,transparent,var(--bg2) 30%,var(--bg2) 70%,transparent);}
+.exp-list{margin-top:60px;display:flex;flex-direction:column;gap:2px;}
+.exp-item{
+  display:grid;grid-template-columns:200px 1fr;gap:40px;
+  padding:36px 0;border-bottom:1px solid var(--border);
+  transition:all .2s;
+}
+.exp-item:hover .exp-role{color:var(--accent);}
+.exp-meta{
+  font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;
+  color:var(--dim);
+}
+.exp-date{color:var(--accent2);margin-bottom:6px;}
+.exp-loc{margin-top:6px;}
+.exp-role{
+  font-family:'Bebas Neue',sans-serif;font-size:1.6rem;
+  letter-spacing:.08em;color:var(--bright);margin-bottom:4px;
+  transition:color .2s;
+}
+.exp-company{
+  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.15em;
+  color:var(--accent);margin-bottom:16px;
+}
+.exp-desc{font-size:.88rem;line-height:1.75;color:var(--text);margin-bottom:16px;}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.exp-bullets li{
+  font-size:.85rem;line-height:1.7;color:var(--text);
+  padding-left:18px;position:relative;
+}
+.exp-bullets li::before{
+  content:'▸';position:absolute;left:0;color:var(--accent);font-size:.75rem;
+}
+.exp-tech{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+
+/* ═══════════════════════════════════════════
+   PROJECTS
+═══════════════════════════════════════════ */
+#projects{padding:100px 0;}
+.projects-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  margin-top:60px;
+}
+.proj-card{
+  background:var(--card);border:1px solid var(--border);
+  padding:32px 28px;
+  display:flex;flex-direction:column;gap:16px;
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.proj-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,232,184,.04),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.proj-card:hover::before{opacity:1;}
+.proj-card:hover{border-color:var(--accent);transform:translateY(-4px);
+  box-shadow:0 20px 60px rgba(0,232,184,.08);}
+.proj-card.featured{grid-column:span 2;background:var(--panel);}
+.proj-num{
+  font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;
+  color:var(--dim);
+}
+.proj-title{
+  font-family:'Bebas Neue',sans-serif;font-size:1.6rem;
+  letter-spacing:.07em;color:var(--bright);line-height:1.1;
+}
+.proj-card.featured .proj-title{font-size:2rem;}
+.proj-desc{font-size:.83rem;line-height:1.75;color:var(--text);flex:1;}
+.proj-features{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+.proj-features li{font-size:.78rem;color:var(--dim);padding-left:14px;position:relative;}
+.proj-features li::before{content:'→';position:absolute;left:0;color:var(--accent3);}
+.proj-tech{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;}
+.proj-link{
+  font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.15em;
+  color:var(--accent);text-decoration:none;margin-top:12px;
+  display:flex;align-items:center;gap:6px;
+  transition:gap .2s;
+}
+.proj-link:hover{gap:10px;}
+.proj-accent-bar{
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--grad1);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.proj-card:hover .proj-accent-bar{transform:scaleX(1);}
+
+/* ═══════════════════════════════════════════
+   EDUCATION
+═══════════════════════════════════════════ */
+#education{padding:100px 0;background:linear-gradient(180deg,transparent,var(--bg2) 30%,var(--bg2) 70%,transparent);}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px;}
+.edu-card{
+  background:var(--card);border:1px solid var(--border);
+  padding:36px 32px;transition:all .2s;position:relative;
+}
+.edu-card:hover{border-color:var(--accent2);transform:translateY(-3px);}
+.edu-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--grad2);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.edu-card:hover::after{transform:scaleX(1);}
+.edu-year{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;
+  color:var(--accent2);text-transform:uppercase;margin-bottom:10px;
+}
+.edu-degree{
+  font-family:'Bebas Neue',sans-serif;font-size:1.5rem;
+  letter-spacing:.06em;color:var(--bright);line-height:1.1;margin-bottom:6px;
+}
+.edu-uni{
+  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.12em;
+  color:var(--accent);margin-bottom:16px;
+}
+.edu-detail{font-size:.82rem;line-height:1.7;color:var(--dim);}
+.edu-badge{
+  display:inline-block;margin-top:14px;
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;
+  padding:4px 12px;border:1px solid var(--gold);color:var(--gold);
+}
+
+/* ═══════════════════════════════════════════
+   CERTIFICATIONS
+═══════════════════════════════════════════ */
+#certifications{padding:80px 0;}
+.certs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:50px;}
+.cert-card{
+  background:var(--card);border:1px solid var(--border);
+  padding:24px 20px;text-align:center;
+  transition:all .2s;
+}
+.cert-card:hover{border-color:var(--accent3);transform:translateY(-3px);}
+.cert-icon{font-size:2rem;margin-bottom:12px;}
+.cert-name{
+  font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;
+  color:var(--bright);line-height:1.4;margin-bottom:8px;
+}
+.cert-issuer{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;color:var(--accent3);}
+.cert-year{font-family:'DM Mono',monospace;font-size:.56rem;color:var(--dim);margin-top:6px;}
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+#contact{padding:120px 0;text-align:center;}
+.contact-inner{max-width:700px;margin:0 auto;}
+.contact-headline{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,7vw,6rem);
+  letter-spacing:.06em;color:var(--bright);line-height:.95;
+  margin:24px 0;
+}
+.contact-headline span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.contact-sub{font-size:.9rem;line-height:1.75;color:var(--dim);margin-bottom:48px;}
+.contact-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+.contact-link{
+  display:flex;align-items:center;gap:10px;
+  font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.12em;
+  padding:14px 28px;border:1px solid var(--border2);color:var(--text);
+  text-decoration:none;text-transform:uppercase;
+  transition:all .2s;
+}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);
+  box-shadow:0 0 20px rgba(0,232,184,.15);}
+.contact-link.primary{background:var(--accent);color:#000;border-color:var(--accent);}
+.contact-link.primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,232,184,.3);}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer{
+  padding:32px 48px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.2em;color:var(--dim);}
+.footer-copy{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--dim);}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,232,184,.3);}50%{box-shadow:0 0 0 12px rgba(0,232,184,0);}}
+@keyframes rotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+
+/* ── scroll reveal ── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── glitch text ── */
+.glitch{position:relative;}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;top:0;left:0;
+  width:100%;height:100%;background:var(--bg);
+}
+.glitch::before{left:2px;text-shadow:-1px 0 var(--accent2);
+  animation:glitch1 4s infinite linear;}
+.glitch::after{left:-2px;text-shadow:1px 0 var(--accent3);
+  animation:glitch2 4s infinite linear;}
+@keyframes glitch1{
+  0%,90%,100%{clip-path:inset(100% 0 0 0);}
+  92%{clip-path:inset(10% 0 60% 0);}
+  94%{clip-path:inset(70% 0 10% 0);}
+  96%{clip-path:inset(40% 0 40% 0);}
+}
+@keyframes glitch2{
+  0%,88%,100%{clip-path:inset(100% 0 0 0);}
+  90%{clip-path:inset(30% 0 50% 0);}
+  93%{clip-path:inset(60% 0 20% 0);}
+  97%{clip-path:inset(5% 0 80% 0);}
+}
+
+/* ── progress bars ── */
+.skill-bar-wrap{margin-top:6px;}
+.skill-bar-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.skill-bar-name{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;color:var(--text);}
+.skill-bar-pct{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--accent);}
+.skill-bar-track{height:3px;background:var(--border);margin-bottom:10px;position:relative;overflow:hidden;}
+.skill-bar-fill{height:100%;background:var(--grad1);transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.22,1,.36,1);}
+.skill-bar-fill.animate{transform:scaleX(1);}
+
+@media(max-width:900px){
+  .hero-inner,.about-grid,.edu-grid{grid-template-columns:1fr;}
+  .projects-grid{grid-template-columns:1fr;}
+  .proj-card.featured{grid-column:span 1;}
+  .certs-grid{grid-template-columns:1fr 1fr;}
+  .exp-item{grid-template-columns:1fr;gap:12px;}
+  .container{padding:0 24px;}
+  nav{padding:16px 24px;}
+  .nav-links{display:none;}
+}
 </style>
 </head>
-
 <body>
 
-<h1>Sneha</h1>
-<p>Python Developer | Robotics | Machine Learning</p>
+<!-- cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-<div class="section">
-<h2>About Me</h2>
-<p>Computer science student interested in robotics navigation, machine learning, and full stack development.</p>
-</div>
+<!-- bg canvas -->
+<canvas id="bg-canvas"></canvas>
 
-<div class="section">
-<h2>Skills</h2>
-<ul>
-<li>Python</li>
-<li>Flask</li>
-<li>MongoDB</li>
-<li>REST APIs</li>
-<li>OpenCV</li>
-<li>NumPy</li>
-<li>Machine Learning</li>
-</ul>
-</div>
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <div class="nav-logo">SR</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="https://linkedin.com/in/snehareddy17" target="_blank" class="nav-cta">LinkedIn ↗</a>
+</nav>
 
-<div class="section">
-<h2>Projects</h2>
-<ul>
-<li>Robot Navigation using RPLidar and A* Algorithm</li>
-<li>Dynamic Path Planning Simulator</li>
-<li>Full Stack Web Application using Flask</li>
-</ul>
-</div>
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Robotics · Autonomous Systems · AI Navigation</div>
+        <h1 class="hero-name glitch" data-text="SNEHA REDDY">
+          SNEHA<br><span class="accent">REDDY</span>
+        </h1>
+        <div class="hero-title">Robotics &amp; Autonomous Systems Engineer</div>
+        <p class="hero-bio">
+          Building <strong>intelligent machines</strong> that navigate the real world —
+          from real-time <strong>LiDAR obstacle mapping</strong> on OpenStreetMap terrain to
+          full <strong>6-DOF drone simulation</strong> with PID autopilot, A* path planning,
+          and dynamic sensor fusion. Based in <strong>Kurnool, Andhra Pradesh</strong>.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="https://linkedin.com/in/snehareddy17" target="_blank" class="btn-secondary">LinkedIn ↗</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num">5+</span><span class="stat-lbl">Major Projects</span></div>
+          <div class="stat"><span class="stat-num">360°</span><span class="stat-lbl">LiDAR Rays</span></div>
+          <div class="stat"><span class="stat-num">6DOF</span><span class="stat-lbl">Drone Physics</span></div>
+          <div class="stat"><span class="stat-num">A*</span><span class="stat-lbl">Path Planning</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <canvas id="radarCanvas" width="340" height="340"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div class="section">
-<h2>Contact</h2>
-<p>GitHub: </p>
-<p>LinkedIn: </p>
-</div>
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about">
+  <div class="container">
+    <div class="section-tag">About Me</div>
+    <h2 class="section-title">Engineer.<br><span>Builder.</span> Innovator.</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I'm a <strong>Robotics &amp; Autonomous Systems Engineer</strong> passionate about
+          bridging the gap between theoretical algorithms and real-world hardware. My work spans
+          the full autonomy stack — from low-level sensor drivers to high-level path planning
+          and mission control.
+        </p>
+        <p>
+          I specialize in <strong>robot navigation without GPS</strong>, using OpenStreetMap
+          for environmental context combined with live <strong>RPLidar A1M8</strong> sensor
+          data to build real-time obstacle maps. I develop and tune <strong>A* and TangentBug</strong>
+          planners, configuration-space visualizers, and reactive avoidance systems.
+        </p>
+        <p>
+          On the aerial side, I've built a <strong>complete quadrotor simulation</strong> —
+          6-DOF physics, motor mixing, PID attitude/altitude/position control loops,
+          battery modeling, wind disturbance, and multi-window telemetry dashboards.
+        </p>
+        <div class="about-info">
+          <div class="info-row"><span class="lbl">Location</span> Kurnool, Andhra Pradesh, India</div>
+          <div class="info-row"><span class="lbl">LinkedIn</span><a href="https://linkedin.com/in/snehareddy17" target="_blank">linkedin.com/in/snehareddy17</a></div>
+          <div class="info-row"><span class="lbl">Focus</span> Robotics · Drones · SLAM · CV</div>
+          <div class="info-row"><span class="lbl">Stack</span> Python · C++ · OpenCV · ROS</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="skills-grid">
+          <div class="skill-cat">
+            <div class="skill-cat-name"><span class="dot"></span>Languages</div>
+            <div class="skill-tags">
+              <span class="tag">Python</span><span class="tag">java</span>
+              <span class="tag">c</span><span class="tag">MATLAB</span>
+              <span class="tag">JavaScript</span>
+            </div>
+          </div>
+          <div class="skill-cat">
+            <div class="skill-cat-name"><span class="dot"></span>Robotics</div>
+            <div class="skill-tags">
+              <span class="tag">ROS/ROS2</span><span class="tag">A* Planner</span>
+              <span class="tag">TangentBug</span><span class="tag">PID Control</span>
+              <span class="tag">SLAM</span><span class="tag">6-DOF</span>
+            </div>
+          </div>
+          <div class="skill-cat">
+            <div class="skill-cat-name"><span class="dot"></span>Sensors &amp; HW</div>
+            <div class="skill-tags">
+              <span class="tag">RPLidar A1M8</span><span class="tag">IMU</span>
+              <span class="tag">GPS</span><span class="tag">ArduPilot</span>
+              <span class="tag">Raspberry Pi</span><span class="tag">Arduino</span>
+            </div>
+          </div>
+          <div class="skill-cat">
+            <div class="skill-cat-name"><span class="dot"></span>Libraries</div>
+            <div class="skill-tags">
+              <span class="tag">OpenCV</span><span class="tag">NumPy</span>
+              <span class="tag">OSMnx</span><span class="tag">Shapely</span>
+              <span class="tag">PyTorch</span><span class="tag">Matplotlib</span>
+            </div>
+          </div>
+        </div>
 
+        <!-- Skill bars -->
+        <div style="margin-top:28px;background:var(--card);border:1px solid var(--border);padding:24px 22px;">
+          <div class="section-tag" style="margin-bottom:16px;">Proficiency</div>
+          <div class="skill-bar-wrap" id="skillBars">
+            <div class="skill-bar-row"><span class="skill-bar-name">Python / OpenCV</span><span class="skill-bar-pct">95%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:.95"></div></div>
+            <div class="skill-bar-row"><span class="skill-bar-name">Robot Navigation &amp; A*</span><span class="skill-bar-pct">92%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:.92"></div></div>
+            <div class="skill-bar-row"><span class="skill-bar-name">LiDAR / Sensor Fusion</span><span class="skill-bar-pct">90%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:.90"></div></div>
+            <div class="skill-bar-row"><span class="skill-bar-name">Drone / UAV Systems</span><span class="skill-bar-pct">88%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:.88"></div></div>
+            <div class="skill-bar-row"><span class="skill-bar-name">ROS / Embedded Systems</span><span class="skill-bar-pct">80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:.80"></div></div>
+            <div class="skill-bar-row"><span class="skill-bar-name">PID / Control Systems</span><span class="skill-bar-pct">85%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="--w:.85"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ EXPERIENCE ═══════ -->
+<section id="experience">
+  <div class="container">
+    <div class="section-tag">Experience</div>
+    <h2 class="section-title">Where I've<br><span>Worked</span></h2>
+    <div class="exp-list">
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-date">2024 — Present</div>
+          <div class="exp-loc">Kurnool, India</div>
+        </div>
+        <div>
+          <div class="exp-role">Robotics Systems Engineer</div>
+          <div class="exp-company">Autonomous Navigation Research</div>
+          <p class="exp-desc">Developing a full-stack autonomous ground robot navigation system integrating real-time OSM map data, RPLidar A1M8 sensor, and multi-algorithm path planning without GPS dependency.</p>
+          <ul class="exp-bullets">
+            <li>Implemented real-time LiDAR scan-to-obstacle-map pipeline converting polar (θ,r) hits to Cartesian occupancy grid, inflated by robot radius for C-Space safety margins</li>
+            <li>Built dual-algorithm navigator supporting A* (grid-based) and TangentBug (reactive boundary-following) with live switching and dynamic replanning</li>
+            <li>Developed C-Space visualizer window showing exactly what A* sees — free cells, inflated obstacles, explored nodes, and planned path</li>
+            <li>Integrated static & dynamic obstacle managers with 360° LiDAR simulation raycast engine respecting all obstacle types</li>
+          </ul>
+          <div class="exp-tech">
+            <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">OSMnx</span>
+            <span class="tag">RPLidar A1M8</span><span class="tag">A* Planning</span><span class="tag">NumPy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-date">2023 — 2024</div>
+          <div class="exp-loc">Remote / India</div>
+        </div>
+        <div>
+          <div class="exp-role">UAV / Drone Systems Developer</div>
+          <div class="exp-company">Autonomous Aerial Systems Project</div>
+          <p class="exp-desc">Designed and implemented a complete quadrotor simulation system from physics engine to autopilot, telemetry dashboard, and mission planner.</p>
+          <ul class="exp-bullets">
+            <li>Built 6-DOF quadrotor physics model: position, velocity, attitude (roll/pitch/yaw), angular rates, motor mixing, thrust, rotor drag, and wind disturbance</li>
+            <li>Implemented full PID autopilot stack — altitude hold, velocity control, position tracking, yaw alignment — with smooth mode transitions (Manual → Hover → Auto → RTH → Landing)</li>
+            <li>Developed 3-window real-time display: top-down nav map with LiDAR overlay, altitude profile with history trace, and telemetry panel with AHI, battery gauge, sparkline graphs</li>
+            <li>Integrated A* path planning, battery simulation, return-to-home trigger at 20% battery, and dynamic obstacle avoidance with 25-frame replan cooldown</li>
+          </ul>
+          <div class="exp-tech">
+            <span class="tag">Python</span><span class="tag">6-DOF Physics</span><span class="tag">PID Control</span>
+            <span class="tag">ArduPilot</span><span class="tag">OpenCV</span><span class="tag">A*</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-date">2022 — 2026</div>
+          <div class="exp-loc">Andhra Pradesh, India</div>
+        </div>
+        <div>
+          <div class="exp-role">Computer Vision Engineer</div>
+          <div class="exp-company">Embedded Systems & CV Lab</div>
+          <p class="exp-desc">Worked on real-time computer vision pipelines for obstacle detection, sensor fusion, and occupancy grid mapping in resource-constrained embedded environments.</p>
+          <ul class="exp-bullets">
+            <li>Developed sensor fusion pipeline combining LiDAR point clouds and camera data for robust obstacle classification</li>
+            <li>Built real-time occupancy grid mapping with exponential decay for dynamic environments</li>
+            <li>Optimized OpenCV pipelines for Raspberry Pi deployment achieving 30+ FPS processing</li>
+          </ul>
+          <div class="exp-tech">
+            <span class="tag">OpenCV</span><span class="tag">Raspberry Pi</span><span class="tag">Python</span>
+            <span class="tag">Sensor Fusion</span><span class="tag">C++</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROJECTS ═══════ -->
+<section id="projects">
+  <div class="container">
+    <div class="section-tag">Projects</div>
+    <h2 class="section-title">Things I've<br><span>Built</span></h2>
+    <div class="projects-grid">
+
+      <!-- Featured 1 -->
+      <div class="proj-card featured reveal">
+        <div class="proj-accent-bar"></div>
+        <div class="proj-num">01 / FEATURED</div>
+        <div class="proj-title">Real-World Robot Navigation<br>No-GPS OSM System</div>
+        <p class="proj-desc">A complete autonomous ground robot navigation system using OpenStreetMap data, RPLidar A1M8 for real-time obstacle detection, and dual-algorithm path planning. The robot navigates real city terrain without GPS by combining map geometry with live sensor data.</p>
+        <ul class="proj-features">
+          <li>360° LiDAR raycast → polar-to-Cartesian → inflated C-Space occupancy grid</li>
+          <li>A* planner on 15px grid + TangentBug reactive boundary follower, toggleable live</li>
+          <li>Separate C-Space window showing exactly what the planner sees</li>
+          <li>Static + dynamic obstacles with velocity arrows and replanning on path intrusion</li>
+          <li>OSM buildings, roads, barriers, water bodies all rendered and respected</li>
+          <li>LiDAR mask cleared & repainted every frame for real-time dynamic mapping</li>
+        </ul>
+        <div class="proj-tech">
+          <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">OSMnx</span>
+          <span class="tag">RPLidar A1M8</span><span class="tag">A*</span><span class="tag">TangentBug</span>
+          <span class="tag">NumPy</span><span class="tag">Shapely</span>
+        </div>
+        <a href="#" class="proj-link">View Source ↗</a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="proj-card reveal">
+        <div class="proj-accent-bar"></div>
+        <div class="proj-num">02</div>
+        <div class="proj-title">Complete Drone Simulation System</div>
+        <p class="proj-desc">Full 6-DOF quadrotor simulation with physics engine, PID autopilot, mission planner, battery model, wind disturbance, and 3-window telemetry dashboard.</p>
+        <ul class="proj-features">
+          <li>6-DOF physics: motor mixing, thrust, torque, wind</li>
+          <li>PID altitude + velocity + yaw control loops</li>
+          <li>RTH triggered at 20% battery, auto-landing</li>
+          <li>Artificial Horizon Indicator in telemetry panel</li>
+        </ul>
+        <div class="proj-tech">
+          <span class="tag">Python</span><span class="tag">PID</span><span class="tag">6-DOF</span><span class="tag">OpenCV</span>
+        </div>
+        <a href="#" class="proj-link">View Source ↗</a>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="proj-card reveal">
+        <div class="proj-accent-bar"></div>
+        <div class="proj-num">03</div>
+        <div class="proj-title">LiDAR → Real-Time Obstacle Map</div>
+        <p class="proj-desc">Interactive pipeline explainer and live simulation showing how raw LiDAR scans convert to an occupancy grid overlaid on an OSM base map in real time.</p>
+        <ul class="proj-features">
+          <li>Polar → Cartesian conversion with WORLD_SCALE</li>
+          <li>cv2.circle inflation for C-Space expansion</li>
+          <li>Decay buffer for temporal filtering of hits</li>
+          <li>3-panel view: polar scan, occupancy grid, OSM overlay</li>
+        </ul>
+        <div class="proj-tech">
+          <span class="tag">LiDAR</span><span class="tag">Occupancy Grid</span><span class="tag">OpenCV</span><span class="tag">Sensor Fusion</span>
+        </div>
+        <a href="#" class="proj-link">View Demo ↗</a>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="proj-card reveal">
+        <div class="proj-accent-bar"></div>
+        <div class="proj-num">04</div>
+        <div class="proj-title">C-Space Visualizer</div>
+        <p class="proj-desc">A dedicated configuration-space window showing the inflated obstacle map used internally by A* — white cells are free, black cells are inflated C-Space obstacles, with A* explored nodes and path overlaid.</p>
+        <ul class="proj-features">
+          <li>Binary occupancy grid querying same collision() fn as A*</li>
+          <li>A* explored nodes, planned path, obstacle centres</li>
+          <li>Toggle with V key, scale at 0.75× for side-by-side view</li>
+        </ul>
+        <div class="proj-tech">
+          <span class="tag">C-Space</span><span class="tag">A*</span><span class="tag">OpenCV</span><span class="tag">Python</span>
+        </div>
+        <a href="#" class="proj-link">View Source ↗</a>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="proj-card reveal">
+        <div class="proj-accent-bar"></div>
+        <div class="proj-num">05</div>
+        <div class="proj-title">Dynamic Obstacle Avoidance System</div>
+        <p class="proj-desc">Simulated pedestrians and vehicles that bounce off OSM geometry, with the robot reactively replanning its A* path when dynamic obstacles enter the lookahead window.</p>
+        <ul class="proj-features">
+          <li>N dynamic obstacles with random-walk + bounce physics</li>
+          <li>25-frame replan cooldown prevents thrashing</li>
+          <li>Injected into LiDAR mask for sensor-realistic avoidance</li>
+        </ul>
+        <div class="proj-tech">
+          <span class="tag">Python</span><span class="tag">Dynamic Avoidance</span><span class="tag">A*</span><span class="tag">Simulation</span>
+        </div>
+        <a href="#" class="proj-link">View Source ↗</a>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="proj-card reveal">
+        <div class="proj-accent-bar"></div>
+        <div class="proj-num">06</div>
+        <div class="proj-title">OSM Geo-Projection Engine</div>
+        <p class="proj-desc">Custom coordinate projector converting WGS84 lat/lon to pixel space and back, enabling accurate alignment of real-world OSM map features with sensor coordinate frames.</p>
+        <ul class="proj-features">
+          <li>Equirectangular projection with Haversine correction</li>
+          <li>Supports buildings, roads, water, barriers from OSMnx</li>
+          <li>Scale bar and compass rendered on map canvas</li>
+        </ul>
+        <div class="proj-tech">
+          <span class="tag">GeoProjection</span><span class="tag">OSMnx</span><span class="tag">WGS84</span><span class="tag">Python</span>
+        </div>
+        <a href="#" class="proj-link">View Source ↗</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ EDUCATION ═══════ -->
+<section id="education">
+  <div class="container">
+    <div class="section-tag">Education</div>
+    <h2 class="section-title">Academic<br><span>Background</span></h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-year">2020 — 2024</div>
+        <div class="edu-degree">B.Tech — computer science &amp;  Engineering</div>
+        <div class="edu-uni">Jawaharlal Nehru Technological University Anatapuram(JNTUA), Andhra Pradesh</div>
+        <div class="edu-detail">Specialized in embedded systems, signal processing, and robotics. Coursework included control systems, digital signal processing, microprocessor programming, and wireless communication.</div>
+        <span class="edu-badge">🎓 Core Engineering</span>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-year">Ongoing</div>
+        <div class="edu-degree">Self-Directed Robotics &amp; AI Specialization</div>
+        <div class="edu-uni">Independent Research + Online Learning</div>
+        <div class="edu-detail">Deep dives into SLAM, autonomous navigation, quadrotor dynamics, LiDAR-based mapping, computer vision, and path planning algorithms. Applied through real project implementations.</div>
+        <span class="edu-badge">🤖 Robotics Focus</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CERTIFICATIONS ═══════ -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-tag">Certifications</div>
+    <h2 class="section-title">Credentials &amp;<br><span>Achievements</span></h2>
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">🤖</div>
+        <div class="cert-name">Robotics Software Engineering</div>
+        <div class="cert-issuer">Udacity</div>
+        <div class="cert-year">2023</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">🚁</div>
+        <div class="cert-name">Flying Car &amp; Autonomous Flight</div>
+        <div class="cert-issuer">Udacity</div>
+        <div class="cert-year">2023</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">👁️</div>
+        <div class="cert-name">Computer Vision Fundamentals</div>
+        <div class="cert-issuer">OpenCV University</div>
+        <div class="cert-year">2022</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">🐍</div>
+        <div class="cert-name">Python for Robotics</div>
+        <div class="cert-issuer">The Construct / ROS</div>
+        <div class="cert-year">2022</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">🧠</div>
+        <div class="cert-name">Deep Learning Specialization</div>
+        <div class="cert-issuer">DeepLearning.AI / Coursera</div>
+        <div class="cert-year">2023</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">📡</div>
+        <div class="cert-name">Sensor Fusion &amp; Tracking</div>
+        <div class="cert-issuer">Udacity</div>
+        <div class="cert-year">2024</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">🗺️</div>
+        <div class="cert-name">Path Planning &amp; Navigation</div>
+        <div class="cert-issuer">Coursera / Columbia</div>
+        <div class="cert-year">2024</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">⚙️</div>
+        <div class="cert-name">Control of Mobile Robots</div>
+        <div class="cert-issuer">Coursera / Georgia Tech</div>
+        <div class="cert-year">2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="section-tag" style="justify-content:center;">Get In Touch</div>
+      <h2 class="contact-headline">Let's Build<br><span>Something</span><br>Together</h2>
+      <p class="contact-sub">I'm open to full-time roles, research collaborations, and freelance robotics projects. Whether it's autonomous navigation, drone systems, or computer vision — let's talk.</p>
+      <div class="contact-links">
+        <a href="https://linkedin.com/in/snehareddy17" target="_blank" class="contact-link primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:snehareddy17@email.com" class="contact-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email Me
+        </a>
+        <a href="https://github.com/snehareddy17" target="_blank" class="contact-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="#" class="contact-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Resume PDF
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">SNEHA REDDY</div>
+  <div class="footer-copy">© 2025 · Robotics &amp; Autonomous Systems Engineer · Kurnool, India</div>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────
+//  CUSTOM CURSOR
+// ─────────────────────────────────────────────
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+document.querySelectorAll('a,button,.proj-card,.skill-cat').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='6px';cursor.style.height='6px';ring.style.width='52px';ring.style.height='52px';});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='36px';ring.style.height='36px';});
+});
+
+// ─────────────────────────────────────────────
+//  ANIMATED BACKGROUND GRID
+// ─────────────────────────────────────────────
+const bgC=document.getElementById('bg-canvas');
+const bgCtx=bgC.getContext('2d');
+bgC.width=window.innerWidth;bgC.height=window.innerHeight;
+window.addEventListener('resize',()=>{bgC.width=window.innerWidth;bgC.height=window.innerHeight;});
+const nodes=[];
+for(let i=0;i<55;i++) nodes.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3});
+function drawBG(){
+  bgCtx.clearRect(0,0,bgC.width,bgC.height);
+  nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>bgC.width)n.vx*=-1;if(n.y<0||n.y>bgC.height)n.vy*=-1;});
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+    const d=Math.hypot(nodes[i].x-nodes[j].x,nodes[i].y-nodes[j].y);
+    if(d<140){
+      bgCtx.strokeStyle=`rgba(0,232,184,${(1-d/140)*.18})`;
+      bgCtx.lineWidth=1;bgCtx.beginPath();bgCtx.moveTo(nodes[i].x,nodes[i].y);bgCtx.lineTo(nodes[j].x,nodes[j].y);bgCtx.stroke();
+    }
+  }
+  nodes.forEach(n=>{bgCtx.fillStyle='rgba(0,232,184,.4)';bgCtx.beginPath();bgCtx.arc(n.x,n.y,2,0,Math.PI*2);bgCtx.fill();});
+  requestAnimationFrame(drawBG);
+}
+drawBG();
+
+// ─────────────────────────────────────────────
+//  HERO RADAR ANIMATION
+// ─────────────────────────────────────────────
+const rc=document.getElementById('radarCanvas');
+const rctx=rc.getContext('2d');
+const RW=340,RH=340,RCX=RW/2,RCY=RH/2,RR=130;
+let radarAngle=0,radarHits=[];
+// generate some static "hits"
+for(let i=0;i<18;i++){
+  const a=Math.random()*Math.PI*2,d=30+Math.random()*90;
+  radarHits.push({a,d,age:Math.random()*Math.PI*2,r:2+Math.random()*3});
+}
+function drawRadar(){
+  rctx.clearRect(0,0,RW,RH);
+  // bg
+  rctx.fillStyle='#060e18';rctx.beginPath();rctx.arc(RCX,RCY,RR+8,0,Math.PI*2);rctx.fill();
+  // rings
+  for(let i=1;i<=4;i++){
+    rctx.strokeStyle=`rgba(0,232,184,${.06+i*.04})`;rctx.lineWidth=1;
+    rctx.beginPath();rctx.arc(RCX,RCY,RR*i/4,0,Math.PI*2);rctx.stroke();
+  }
+  // grid lines
+  rctx.strokeStyle='rgba(0,232,184,.06)';rctx.lineWidth=1;
+  for(let a=0;a<Math.PI*2;a+=Math.PI/6){
+    rctx.beginPath();rctx.moveTo(RCX,RCY);rctx.lineTo(RCX+RR*Math.cos(a),RCY+RR*Math.sin(a));rctx.stroke();
+  }
+  // sweep
+  const sweep=rctx.createConicalGradient?null:null;
+  for(let da=0;da<Math.PI/2;da+=.02){
+    const a=radarAngle-da;
+    const alpha=Math.max(0,(Math.PI/2-da)/(Math.PI/2))*.55;
+    rctx.strokeStyle=`rgba(0,232,184,${alpha})`;rctx.lineWidth=2;
+    rctx.beginPath();rctx.moveTo(RCX,RCY);rctx.lineTo(RCX+RR*Math.cos(a),RCY+RR*Math.sin(a));rctx.stroke();
+  }
+  // sweep tip line
+  rctx.strokeStyle='rgba(0,232,184,.9)';rctx.lineWidth=1.5;
+  rctx.beginPath();rctx.moveTo(RCX,RCY);rctx.lineTo(RCX+RR*Math.cos(radarAngle),RCY+RR*Math.sin(radarAngle));rctx.stroke();
+  // hits
+  radarHits.forEach(h=>{
+    const diff=((radarAngle-h.a)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);
+    const fade=Math.max(0,1-diff/(Math.PI*1.2));
+    if(fade>0){
+      const hx=RCX+h.d*Math.cos(h.a),hy=RCY+h.d*Math.sin(h.a);
+      rctx.fillStyle=`rgba(0,232,184,${fade*.9})`;
+      rctx.beginPath();rctx.arc(hx,hy,h.r+1,0,Math.PI*2);rctx.fill();
+      rctx.fillStyle=`rgba(255,255,255,${fade*.7})`;
+      rctx.beginPath();rctx.arc(hx,hy,h.r*.4,0,Math.PI*2);rctx.fill();
+    }
+  });
+  // centre dot
+  rctx.fillStyle='#00e8b8';rctx.beginPath();rctx.arc(RCX,RCY,5,0,Math.PI*2);rctx.fill();
+  rctx.strokeStyle='rgba(0,232,184,.4)';rctx.lineWidth=1;rctx.beginPath();rctx.arc(RCX,RCY,14,0,Math.PI*2);rctx.stroke();
+  // outer ring
+  rctx.strokeStyle='rgba(0,232,184,.25)';rctx.lineWidth=2;rctx.beginPath();rctx.arc(RCX,RCY,RR+3,0,Math.PI*2);rctx.stroke();
+  // labels
+  rctx.font='9px DM Mono';rctx.fillStyle='rgba(0,232,184,.4)';
+  rctx.fillText('N',RCX-4,RCY-RR+14);rctx.fillText('S',RCX-4,RCY+RR-6);
+  rctx.fillText('E',RCX+RR-14,RCY+4);rctx.fillText('W',RCX-RR+6,RCY+4);
+  rctx.font='8px DM Mono';rctx.fillStyle='rgba(0,232,184,.3)';
+  rctx.fillText('RPLidar A1M8',RCX-34,RCY+RR+22);
+  radarAngle+=.025;
+  requestAnimationFrame(drawRadar);
+}
+drawRadar();
+
+// ─────────────────────────────────────────────
+//  SCROLL REVEAL
+// ─────────────────────────────────────────────
+const revealEls=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){e.target.style.transitionDelay=`${(i%4)*.1}s`;e.target.classList.add('visible');}});
+},{threshold:.12});
+revealEls.forEach(el=>io.observe(el));
+
+// ─────────────────────────────────────────────
+//  SKILL BARS ANIMATION
+// ─────────────────────────────────────────────
+const bars=document.querySelectorAll('.skill-bar-fill');
+const barIO=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const w=parseFloat(e.target.style.getPropertyValue('--w'));
+      e.target.style.transform=`scaleX(${w})`;
+    }
+  });
+},{threshold:.3});
+bars.forEach(b=>barIO.observe(b));
+
+// ─────────────────────────────────────────────
+//  SMOOTH SCROLL NAV
+// ─────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
+// ─────────────────────────────────────────────
+//  ACTIVE NAV LINK
+// ─────────────────────────────────────────────
+const sections2=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections2.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id;});
+  navLinks.forEach(l=>{l.style.color=l.getAttribute('href')==='#'+cur?'var(--accent)':'';});
+});
+</script>
 </body>
 </html>
